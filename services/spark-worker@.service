@@ -28,4 +28,4 @@ ExecStart=/bin/bash -c '\
 ExecStop=/usr/bin/docker stop %p-%i
 
 [X-Fleet]
-Conflicts=%p@%i.service
+Conflicts=%p@*.service
