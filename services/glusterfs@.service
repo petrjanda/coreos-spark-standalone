@@ -25,3 +25,4 @@ ExecStop=/usr/bin/docker stop %p-%i
 
 [X-Fleet]
 MachineOf=spark-worker@%i.service
+Conflicts=%p@%i.service
