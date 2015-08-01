@@ -21,6 +21,7 @@ ExecStart=/bin/bash -c '\
     -p 8081:8081 \
     -e SPARK_PUBLIC_DNS=${COREOS_PUBLIC_IPV4} \
     --name %p-%i \
+    -v /media/glusterfs/:/media/ \
     gettyimages/spark \
     /usr/spark/bin/spark-class org.apache.spark.deploy.worker.Worker $SPARK_MASTER_URL'
 
