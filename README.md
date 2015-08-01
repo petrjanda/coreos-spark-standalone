@@ -1,0 +1,14 @@
+## Flannel
+
+    etcdctl get /coreos.com/network/config
+
+## GlusterFS
+
+    glusterd # start daemon
+    gluster peer probe <ip> # peer to other nodes (use flannel IP)
+    gluster volume create <name> replicate <n> <ip>:<path> <ip2>:<path> # create replicated distributed fs
+
+
+## Spark
+
+    etcdctl get /services/spark-master # has master IP

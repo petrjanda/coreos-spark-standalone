@@ -16,8 +16,10 @@ ExecStartPre=-/usr/bin/docker rm %p-%i
 ExecStart=/bin/bash -c "/usr/bin/docker run \
   --cap-add=SYS_ADMIN \
   --name %p-%i \
-  -h %p \
-  petrjanda/glusterfs \
-  glusterd"
+  -v /media/glusterfs/:/media/ \
+  petrjanda/glusterfs"
 
 ExecStop=/usr/bin/docker stop %p-%i
+
+[X-Fleet]
+Conflicts=%p@%i.service
