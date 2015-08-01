@@ -21,7 +21,7 @@ ExecStart=/bin/bash -c "/usr/bin/docker run \
   -e SPARK_LOCAL_IP=${COREOS_PUBLIC_IPV4} \
   --net=host \
   --name %p \
-  gettyimages/spark \
+  petrjanda/spark \
   /usr/spark/bin/spark-class org.apache.spark.deploy.master.Master \
 "
 

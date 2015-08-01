@@ -7,3 +7,4 @@ vagrant scp services/glusterfs@.service core-01:glusterfs@.service
 vagrant scp bin/start-master.sh core-01:start-master.sh
 vagrant scp bin/start-workers.sh core-01:start-workers.sh
 vagrant scp bin/stop-master.sh core-01:stop-master.sh
+vagrant scp bin/stop-workers.sh core-01:stop-workers.sh

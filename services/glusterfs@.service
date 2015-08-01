@@ -18,7 +18,7 @@ ExecStart=/bin/bash -c "/usr/bin/docker run \
   --cap-add=SYS_ADMIN \
   --name %p-%i \
   -e ETCD_URL=${COREOS_PUBLIC_IPV4}:4001 \
-  -v /media/glusterfs/:/media/ \
+  -v /media/glusterfs \
   petrjanda/glusterfs"
 
 ExecStop=/usr/bin/docker stop %p-%i
