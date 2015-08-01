@@ -1,0 +1,22 @@
+[Unit]
+Description=Spark Master Discovery
+BindsTo=spark-master.service
+After=spark-master.service
+
+[Service]
+Restart=always
+RestartSec=1m
+
+TimeoutStartSec=0
+KillMode=none
+EnvironmentFile=/etc/environment
+
+ExecStart=/bin/sh -c " \
+  while true; \
+    do /usr/bin/etcdctl set /services/spark-master ${COREOS_PUBLIC_IPV4}; \
+  done"
+
+ExecStop=/usr/bin/etcdctl rm /services/spark-master
+
+[X-Fleet]
+MachineOf=spark-master.service

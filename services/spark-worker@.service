@@ -1,0 +1,32 @@
+[Unit]
+Description=Spark Worker
+After=docker.service
+After=etcd.service
+Requires=etcd.service
+After=media-ephemeral.mount
+Requires=media-ephemeral.mount
+
+[Service]
+Restart=always
+RestartSec=1m
+
+TimeoutStartSec=0
+KillMode=none
+EnvironmentFile=/etc/environment
+
+ExecStartPre=-/usr/bin/docker kill %p-%i
+ExecStartPre=-/usr/bin/docker rm %p-%i
+
+ExecStart=/bin/bash -c '\
+  SPARK_MASTER_URL=spark://$(/usr/bin/etcdctl get /services/spark-master):7077; \
+  /usr/bin/docker run \
+    -p 8081:8081 \
+    -e SPARK_PUBLIC_DNS=${COREOS_PUBLIC_IPV4} \
+    --name %p-%i \
+    gettyimages/spark \
+    /usr/spark/bin/spark-class org.apache.spark.deploy.worker.Worker $SPARK_MASTER_URL'
+
+ExecStop=/usr/bin/docker stop %p-%i
+
+[X-Fleet]
+Conflicts=%p@%i.service
