@@ -1,6 +1,7 @@
 [Unit]
 Description=GlusterFS
 After=docker.service
+After=spark-worker@%i.service
 
 [Service]
 Restart=always
@@ -16,10 +17,11 @@ ExecStartPre=-/usr/bin/docker rm %p-%i
 ExecStart=/bin/bash -c "/usr/bin/docker run \
   --cap-add=SYS_ADMIN \
   --name %p-%i \
+  -e ETCD_URL=${COREOS_PUBLIC_IPV4}:4001 \
   -v /media/glusterfs/:/media/ \
   petrjanda/glusterfs"
 
 ExecStop=/usr/bin/docker stop %p-%i
 
 [X-Fleet]
-Conflicts=%p@%i.service
+MachineOf=spark-worker@%i.service
