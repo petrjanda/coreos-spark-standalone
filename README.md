@@ -1,3 +1,9 @@
+## Requirements
+
+* VirtualBox
+* Vagrant
+* Vagrant SCP - https://github.com/invernizzi/vagrant-scp
+
 ## Flannel
 
     etcdctl get /coreos.com/network/config
