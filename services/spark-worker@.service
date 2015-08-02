@@ -3,6 +3,8 @@ Description=Spark Worker
 After=docker.service
 After=etcd.service
 Requires=etcd.service
+Requires=flanneld.service
+After=flanneld.service
 
 [Service]
 Restart=always

@@ -1,6 +1,8 @@
 [Unit]
 Description=Spark Master
 After=docker.service
+Requires=flanneld.service
+After=flanneld.service
 
 [Service]
 Restart=always
