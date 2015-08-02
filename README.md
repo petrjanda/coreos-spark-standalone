@@ -18,3 +18,7 @@
 ## Spark
 
     etcdctl get /services/spark-master # has master IP
+
+    source /run/flannel/subnet.env
+    sudo ifconfig docker0 ${FLANNEL_SUBNET}
+    sudo docker -d --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU} &

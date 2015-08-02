@@ -1,7 +1,6 @@
 [Unit]
 Description=GlusterFS
 After=docker.service
-After=spark-worker@%i.service
 Requires=flanneld.service
 After=flanneld.service
 
