@@ -1,0 +1,24 @@
+[Unit]
+Description=GlusterFS Discovery
+BindsTo=glusterfs@%i.service
+After=glusterfs@%i.service
+
+[Service]
+Restart=always
+RestartSec=1m
+
+TimeoutStartSec=0
+KillMode=none
+EnvironmentFile=/etc/environment
+
+ExecStart=/bin/sh -c ' \
+  while true; do \
+    echo "heartbeat glusterfs-%i" \
+    /usr/bin/etcdctl set /services/glusterfs/${COREOS_PUBLIC_IPV4} $(/usr/bin/docker inspect --format="{{.NetworkSettings.IPAddress }}" glusterfs-%i); \
+    sleep 10; \
+  done'
+
+ExecStop=/usr/bin/etcdctl rm /services/glusterfs/${COREOS_PUBLIC_IPV4}
+
+[X-Fleet]
+MachineOf=glusterfs@%i.service

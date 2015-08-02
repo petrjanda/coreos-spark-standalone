@@ -10,7 +10,6 @@
 
 ## GlusterFS
 
-    glusterd # start daemon
     gluster peer probe <ip> # peer to other nodes (use flannel IP)
     gluster volume create <name> replicate <n> <ip>:<path> <ip2>:<path> # create replicated distributed fs
 
