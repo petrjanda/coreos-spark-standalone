@@ -1,4 +1,4 @@
 #!/bin/bash
 
-fleetctl destroy spark-master.service
-fleetctl destroy spark-master-discovery.service
+fleetctl destroy services/spark-master.service
+fleetctl destroy services/spark-master-discovery.service

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-fleetctl load spark-worker@{1,2}.service
-fleetctl start spark-worker@{1,2}.service
+fleetctl load services/spark-worker@{1,2}.service
+fleetctl start services/spark-worker@{1,2}.service
 
-fleetctl load glusterfs@{1,2}.service
-fleetctl load glusterfs-discovery@{1,2}.service
-fleetctl start glusterfs@{1,2}.service
-fleetctl start glusterfs-discovery@{1,2}.service
+fleetctl load services/glusterfs@{1,2}.service
+fleetctl load services/glusterfs-discovery@{1,2}.service
+fleetctl start services/glusterfs@{1,2}.service
+fleetctl start services/glusterfs-discovery@{1,2}.service
