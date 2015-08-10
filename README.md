@@ -21,3 +21,7 @@
     source /run/flannel/subnet.env
     sudo ifconfig docker0 ${FLANNEL_SUBNET}
     sudo docker -d --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU} &
+
+    gluster peer probe <ip>
+    gluster volume create vol1 replica 2 10.1.95.24:/media/gfs/vol1 10.1.38.21:/media/gfs/vol1
+    gluster volume start vol1

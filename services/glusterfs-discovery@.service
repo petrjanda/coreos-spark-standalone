@@ -13,12 +13,11 @@ EnvironmentFile=/etc/environment
 
 ExecStart=/bin/sh -c ' \
   while true; do \
-    echo "heartbeat glusterfs-%i" \
-    /usr/bin/etcdctl set /services/glusterfs/${COREOS_PUBLIC_IPV4} $(/usr/bin/docker inspect --format="{{.NetworkSettings.IPAddress }}" glusterfs-%i); \
-    sleep 10; \
+    /usr/bin/etcdctl set /services/glusterfs/${COREOS_PRIVATE_IPV4} $(/usr/bin/docker inspect --format="{{.NetworkSettings.IPAddress }}" glusterfs-%i); \
+    sleep 1; \
   done'
 
-ExecStop=/usr/bin/etcdctl rm /services/glusterfs/${COREOS_PUBLIC_IPV4}
+ExecStop=/usr/bin/etcdctl rm /services/glusterfs/${COREOS_PRIVATE_IPV4}
 
 [X-Fleet]
 MachineOf=glusterfs@%i.service

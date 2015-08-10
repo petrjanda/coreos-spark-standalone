@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker 
+GLUSTER_IPS=$(/usr/bin/etcdctl ls /services/glusterfs | xargs -I {} /usr/bin/etcdctl get {})
+

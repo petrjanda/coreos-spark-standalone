@@ -1,6 +1,7 @@
 [Unit]
-Description=GlusterFS
+Description=GlusterFS Client
 After=docker.service
+
 Requires=flanneld.service
 After=flanneld.service
 
@@ -16,12 +17,15 @@ ExecStartPre=-/usr/bin/docker kill %p-%i
 ExecStartPre=-/usr/bin/docker rm %p-%i
 
 ExecStart=/bin/bash -c "/usr/bin/docker run \
-  --cap-add=SYS_ADMIN \
+  --privileged=true \
   --name %p-%i \
-  -v /media/ebs:/media/gfs \
-  petrjanda/glusterfs"
+  -e GLUSTERFS_HOST=$(/usr/bin/etcdctl get /services/glusterfs/${COREOS_PRIVATE_IPV4}) \
+  -e GLUSTERFS_VOL_NAME=vol1 \
+  -v /media/gfs \
+  petrjanda/glusterfs-client"
 
 ExecStop=/usr/bin/docker stop %p-%i
 
 [X-Fleet]
+MachineOf=glusterfs@%i.service
 Conflicts=%p@*.service
