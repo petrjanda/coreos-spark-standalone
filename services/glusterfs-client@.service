@@ -6,23 +6,22 @@ Requires=flanneld.service
 After=flanneld.service
 
 [Service]
-Restart=always
-RestartSec=1m
-
 TimeoutStartSec=0
 KillMode=none
 EnvironmentFile=/etc/environment
 
 ExecStartPre=-/usr/bin/docker kill %p-%i
 ExecStartPre=-/usr/bin/docker rm %p-%i
+ExecStartPre=/usr/bin/docker exec -it glusterfs-%i gluster volume info
 
-ExecStart=/bin/bash -c "/usr/bin/docker run \
+ExecStart=/bin/bash -c '
+/usr/bin/docker run \
   --privileged=true \
   --name %p-%i \
   -e GLUSTERFS_HOST=$(/usr/bin/etcdctl get /services/glusterfs/${COREOS_PRIVATE_IPV4}) \
   -e GLUSTERFS_VOL_NAME=vol1 \
   -v /media/gfs \
-  petrjanda/glusterfs-client"
+  petrjanda/glusterfs-client'
 
 ExecStop=/usr/bin/docker stop %p-%i
 

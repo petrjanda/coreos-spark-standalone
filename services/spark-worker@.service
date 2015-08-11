@@ -8,9 +8,6 @@ Requires=etcd.service
 Requires=flanneld.service
 After=flanneld.service
 
-Requires=glusterfs-client@%i.service
-After=glusterfs-client@%i.service
-
 [Service]
 Restart=always
 RestartSec=1m
@@ -28,12 +25,10 @@ ExecStart=/bin/bash -c '\
     -p 8081:8081 \
     -e SPARK_PUBLIC_DNS=${COREOS_PUBLIC_IPV4} \
     --name %p-%i \
-    --volumes-from glusterfs-client-%i \
     petrjanda/spark \
     /usr/spark/bin/spark-class org.apache.spark.deploy.worker.Worker $SPARK_MASTER_URL'
 
 ExecStop=/usr/bin/docker stop %p-%i
 
 [X-Fleet]
-MachineOf=glusterfs-client@%i.service
 Conflicts=%p@*.service
