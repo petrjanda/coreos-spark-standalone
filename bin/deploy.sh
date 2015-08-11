@@ -1,6 +1,7 @@
 #!/bin/bash
 
-HOST=$1
+KEY=$1
+HOST=$2
 
-vagrant scp services/ $HOST:services/
-vagrant scp bin/ $HOST:bin/
+scp -r -i $KEY services/ core@$HOST:services/
+scp -r -i $KEY bin/ core@$HOST:bin/
