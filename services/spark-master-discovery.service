@@ -11,11 +11,11 @@ TimeoutStartSec=0
 KillMode=none
 EnvironmentFile=/etc/environment
 
-ExecStart=/bin/sh -c ' \
+ExecStart=/bin/sh -c " \
   while true; do \
     /usr/bin/etcdctl set /services/spark-master $(/usr/bin/docker inspect --format '{{ .NetworkSettings.IPAddress }}' spark-master); \
     sleep 10; \
-  done'
+  done"
 
 ExecStop=/usr/bin/etcdctl rm /services/spark-master
 
