@@ -1,4 +1,6 @@
 #!/bin/bash
 
-vagrant scp services/ core-01:services/
-vagrant scp bin/ core-01:bin/
+HOST=$1
+
+vagrant scp services/ $HOST:services/
+vagrant scp bin/ $HOST:bin/
