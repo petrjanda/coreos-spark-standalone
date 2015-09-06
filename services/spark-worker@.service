@@ -24,6 +24,11 @@ ExecStart=/bin/bash -c '\
   /usr/bin/docker run \
     -p 8081:8081 \
     -e SPARK_PUBLIC_DNS=${COREOS_PUBLIC_IPV4} \
+    -e SPARK_WORKER_PORT=8881 \
+    -e SPARK_WORKER_WEBUI_PORT=8081 \
+    -e SPARK_WORKER_DIR=/var/data/ebs/spark/ \
+    -v /media/ebs:/var/data/ebs/ \
+    -v /media/ebs/tmp:/tmp/ \
     --name %p-%i \
     petrjanda/spark \
     /usr/spark/bin/spark-class org.apache.spark.deploy.worker.Worker $SPARK_MASTER_URL'

@@ -1,5 +1,5 @@
 [Unit]
-Description=Spark Master
+Description=Jupyter
 After=docker.service
 Requires=flanneld.service
 After=flanneld.service
@@ -16,13 +16,11 @@ ExecStartPre=-/usr/bin/docker kill %p
 ExecStartPre=-/usr/bin/docker rm %p
 
 ExecStart=/bin/bash -c "/usr/bin/docker run \
-  -p 6066:6066 \
-  -p 7077:7077 \
-  -p 8080:8080 \
-  -e SPARK_PUBLIC_DNS=${COREOS_PUBLIC_IPV4} \
+  -p 8888:8888 \
   --name %p \
-  petrjanda/spark \
-  /usr/spark/bin/spark-class org.apache.spark.deploy.master.Master \
+  -v /media/ebs:/var/data/ebs/ \
+  petrjanda/jupyter \
+  /bin/bash -c 'jupyter notebook --generate-config; jupyter notebook --ip 0.0.0.0 --notebook-dir /var/data/ebs/' \
 "
 
 ExecStop=/usr/bin/docker stop %p
